@@ -59,12 +59,11 @@ def search():
 
     # Поиск
     results = idx.search(query, top_k=top_k)
+    results = [(doc_id, score) for doc_id, score in results if score > 0]
 
     if len(results) == 0:
         print("Ничего не найдено.")
         return []
-
-    results = [(doc_id, score) for doc_id, score in results if score > 0]
 
     print(f"Всего документов найдено: {len(results)}.")
 
