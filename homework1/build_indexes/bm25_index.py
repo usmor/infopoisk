@@ -1,4 +1,3 @@
-import bm25s
 import pickle
 import re
 import numpy as np
