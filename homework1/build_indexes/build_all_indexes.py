@@ -20,28 +20,31 @@ def build_all_indexes(
     """
     os.makedirs(save_dir, exist_ok=True)
 
+    # Перед построением индексов корпус текстов проходит обработку
     print("Шаг 1. Препроцессинг корпуса...")
     texts = preprocess_corpus()
     print(f"Корпус обработан. Всего документов: {len(texts)}")
 
+    # Словарь для хранения путей к каждому индексу
     index_paths = {}
 
+    # Последовательное построение всех индексов
     print("Шаг 2. Строим частотные индексы...")
-    # FrequencyIndexLib
+    # FrequencyIndexLib: для Whoosh индекса передаём директорию, так как он сохраняет несколько файлов
     freq_lib_index = FrequencyIndexLib(
         index_dir=os.path.join(
             save_dir, "freq_index_lib"))
     freq_lib_index.build(texts)
     index_paths["freq_lib"] = os.path.join(save_dir, "freq_index_lib")
 
-    # FrequencyIndexDict
+    # FrequencyIndexDict: сохраняем в один файл .pkl, так как это словарь
     freq_dict_index = FrequencyIndexDict()
     freq_dict_index.build(texts)
     dict_path = os.path.join(save_dir, "freq_index_dict.pkl")
     freq_dict_index.save(dict_path)
     index_paths["freq_dict"] = dict_path
 
-    # FrequencyIndexMatrix
+    # FrequencyIndexMatrix: сохраняются и матрица, и метаданные
     freq_matrix_index = FrequencyIndexMatrix()
     freq_matrix_index.build(texts)
     matrix_path = os.path.join(save_dir, "freq_index_matrix")
@@ -49,21 +52,21 @@ def build_all_indexes(
     index_paths["freq_matrix"] = matrix_path
 
     print("Шаг 3. Строим BM25 индексы...")
-    # BM25IndexLib
+    # BM25IndexLib: библиотека rank-bm25 сохраняет только словарь, поэтому сохраняем его в .pkl файл
     bm25_lib_index = BM25IndexLib()
     bm25_lib_index.build(texts)
     lib_path = os.path.join(save_dir, "bm25_lib.pkl")
     bm25_lib_index.save(lib_path)
     index_paths["bm25_lib"] = lib_path
 
-    # BM25IndexDict
+    # BM25IndexDict: сохраняем в один файл .pkl, так как это словарь
     bm25_dict_index = BM25IndexDict()
     bm25_dict_index.build(texts)
     dict_path = os.path.join(save_dir, "bm25_dict.pkl")
     bm25_dict_index.save(dict_path)
     index_paths["bm25_dict"] = dict_path
 
-    # BM25IndexMatrix
+    # BM25IndexMatrix: сохраняются и матрица, и метаданные
     bm25_matrix_index = BM25IndexMatrix()
     bm25_matrix_index.build(texts)
     matrix_path = os.path.join(save_dir, "bm25_matrix")

@@ -1,24 +1,17 @@
-from abc import ABC, abstractmethod
-
-
-class BaseIndex(ABC):
+class BaseIndex():
     """
     Базовый класс для всех индексов.
-    Определяет интерфейс для построения, сохранения и загрузки.
+    Определяет интерфейс для построения, сохранения, загрузки и поиска.
     """
 
-    @abstractmethod
     def build(self, texts):
         pass
 
-    @abstractmethod
     def save(self, path):
         pass
 
-    @abstractmethod
     def load(self, path):
         pass
 
-    @abstractmethod
     def search(self, query: str, top_k: int = 5):
         pass

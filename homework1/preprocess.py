@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 from tqdm.auto import tqdm
 nltk.download('stopwords')
 
+# Инициализация морфологического анализатора
 morph = pymorphy3.MorphAnalyzer()
 
 # Загружаем стоп-слова для русского языка
@@ -16,7 +17,6 @@ nltk_stopwords = set(stopwords.words('russian'))
 def preprocess_text(text: str) -> str:
     """
       Предобработка текста:
-      - удаление нумерации
       - очистка от пунктуации и чисел
       - лемматизация
       - удаление стоп-слов
@@ -49,11 +49,15 @@ def preprocess_corpus() -> list:
     # Выбираем только детские сказки
     df = df[df["Label"] == 1].reset_index(drop=True)
 
+    # Применяем препроцессинг к каждому тексту и отслеживаем прогресс
     tqdm.pandas()
-
     df["preprocessed_tale"] = df["Tale"].progress_apply(preprocess_text)
+
+    # Удаляем столбец с меткой, он больше не нужен
     del df["Label"]
 
+    # Сохраняем предобработанные тексты в новый CSV файл
     df.to_csv("./preprocessed_tales.csv", index=False)
 
+    # Данный список текстов будет использоваться для построения индексов
     return df["preprocessed_tale"].tolist()
