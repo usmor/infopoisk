@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+backend/indexes/
+backend/data/
