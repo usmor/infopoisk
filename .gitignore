@@ -15,4 +15,4 @@ venv/
 .DS_Store
 
 backend/indexes/
-backend/data/
+backend/data/*.json

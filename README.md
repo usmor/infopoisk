@@ -115,7 +115,13 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Построение индексов
+### 4. Скачивание данных
+В папке `data` лежат исходные датасеты, обработанные загрузить в гит не удалось в виду их веса.
+Их нужно скачать и положить в папку `data`.
+- [ted_documents.json](https://drive.google.com/file/d/1Vw-PYnBweNh6BkRDNnMtELo4723uqBZ2/view?usp=sharing)
+- [ted_preprocessed.json](https://drive.google.com/file/d/19dZL__iHJWIDORLVQocsdVQiPG_O6whA/view?usp=sharing)
+
+### 5. Построение индексов
 ```
 cd backend/src
 python build_indexes/build_all_indexes.py 
