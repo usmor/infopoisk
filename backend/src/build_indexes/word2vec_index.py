@@ -7,7 +7,7 @@ from gensim.models import Word2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 import sys
 sys.path.append(os.path.dirname(__file__))
-from base_index import BaseIndex # noqa: E402
+from base_index import BaseIndex  # noqa: E402
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 INDEXES_DIR = os.path.join(BASE_DIR, "../indexes")

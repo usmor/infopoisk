@@ -45,7 +45,7 @@ def lemmatize_for_index(text: str, lang: str):
     Лемматизация для построения индексов.
     """
     text = clean_text(text)
-    
+
     if lang == "en":
         doc = nlp_en(text)
         return [
@@ -77,23 +77,23 @@ def lemmatize_for_query(text: str, lang: str):
     Лемматизация для поискового запроса.
     """
     text = clean_text(text)
-    
+
     if lang == "en":
         doc = nlp_en(text)
         lemmas = [token.lemma_.lower() for token in doc if token.is_alpha]
         return lemmas
-        
+
     elif lang == "fr":
         doc = nlp_fr(text)
         lemmas = [token.lemma_.lower() for token in doc if token.is_alpha]
         return lemmas
-        
+
     elif lang == "ru":
         tokens = [token.text.lower()
                   for token in tokenize(text) if token.text.isalpha()]
         lemmas = [morph_ru.parse(token)[0].normal_form for token in tokens]
         return lemmas
-        
+
     else:
         return text.split()
 
@@ -121,6 +121,7 @@ def preprocess_corpus():
 
     print(f"Обработанный корпус сохранен: {OUTPUT_PATH}")
     return preprocessed_docs
+
 
 if __name__ == "__main__":
     preprocess_corpus()
