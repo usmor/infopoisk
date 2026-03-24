@@ -1,7 +1,13 @@
-from language_detector import language_detector
-from preprocessing import lemmatize_for_query
-from data_storage import DataStorage
 import time
+import sys
+from pathlib import Path
+
+root_dir = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(root_dir))
+from backend.src.data_storage import DataStorage  # noqa: E402
+from backend.src.preprocessing import lemmatize_for_query  # noqa: E402
+from backend.src.language_detector import language_detector  # noqa: E402
+
 
 storage = DataStorage()
 
@@ -22,15 +28,15 @@ class SearchEngine:
             return
 
         if index_type == "bm25":
-            from build_indexes.bm25_index import BM25Index
+            from backend.src.build_indexes.bm25_index import BM25Index
             idx = BM25Index(k1=1.5, b=0.75)
             idx.load()
         elif index_type == "word2vec":
-            from build_indexes.word2vec_index import Word2VecIndex
+            from backend.src.build_indexes.word2vec_index import Word2VecIndex
             idx = Word2VecIndex(vector_size=300, window=5, min_count=2)
             idx.load()
         elif index_type == "fasttext":
-            from build_indexes.fasttext_index import FastTextIndex
+            from backend.src.build_indexes.fasttext_index import FastTextIndex
             idx = FastTextIndex(vector_size=300, window=5, min_count=2)
             idx.load()
 
@@ -68,6 +74,7 @@ class SearchEngine:
                 'title': self.storage.get_title(talk_id, query_lang),
                 'speakers': self.storage.get_speakers(talk_id),
                 'description': description,
+                'transcript': self.storage.get_transcript(talk_id, query_lang),
                 'available_languages': available_langs
             })
 

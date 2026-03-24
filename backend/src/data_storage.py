@@ -61,12 +61,6 @@ class DataStorage:
 
         return f"Выступление #{talk_id}"
 
-    def get_all_titles(self, talk_id: int) -> Dict[str, str]:
-        """
-        Возвращает все заголовки выступления.
-        """
-        return self.titles_by_id.get(talk_id, {})
-
     def get_description(self, talk_id: int,
                         language: str = "ru") -> Optional[str]:
         """

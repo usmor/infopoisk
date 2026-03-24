@@ -1,5 +1,5 @@
 import argparse
-from cli_search import SearchEngine
+from search import SearchEngine
 
 
 class Colors:
