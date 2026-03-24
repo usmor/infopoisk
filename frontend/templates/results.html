@@ -1,0 +1,122 @@
+{% extends "base.html" %} {% block content %}
+<section class="results-section">
+  <div class="search-info">
+    <h2 data-i18n="results_title">{{ results_title }}</h2>
+
+    <div class="query-info">
+      <p>
+        <strong data-i18n="query_text">{{ query_text }}</strong> "{{ query }}"
+      </p>
+      <p>
+        <strong data-i18n="model_text">{{ model_text }}</strong> {{ index_type
+        }}
+      </p>
+      <p>
+        <strong data-i18n="max_results">{{ max_results }}</strong> {{ top_k }}
+      </p>
+      <p>
+        <strong data-i18n="found">{{ found }}</strong> {{ total_results }}
+        <span data-i18n="results_found">{{ results_found }}</span>
+      </p>
+      <p>
+        <strong data-i18n="search_time_label">{{ search_time_label }}</strong>
+        {{ search_time }} <span data-i18n="seconds">{{ seconds }}</span>
+      </p>
+    </div>
+
+    <a href="/search" class="back-link" data-i18n="new_search"
+      >{{ new_search }}</a
+    >
+  </div>
+
+  {% if error %}
+  <div class="error-message">
+    <p>
+      ❌ <span data-i18n="error_title">{{ error_title }}</span>: {{ error }}
+    </p>
+  </div>
+  {% elif results and results.results %}
+  <div class="results-list">
+    {% for result in results.results %}
+    <div
+      class="result-item"
+      data-talk-id="{{ result.talk_id }}"
+      data-current-lang="{{ result.language }}"
+    >
+      <h3 class="result-title">{{ result.title }}</h3>
+
+      <div class="result-meta">
+        <span class="speakers"
+          >🎤 <span data-i18n="speakers">{{ speakers }}</span>: {{
+          result.speakers|join(', ') }}
+        </span>
+        <span class="score"
+          >📊 <span data-i18n="relevance">{{ relevance }}</span>
+          {{ "%.3f"|format(result.score) }}
+        </span>
+        <span class="language"
+          >🌐 <span data-i18n="language">{{ language }}</span>
+          <span class="current-language">{{ result.language }}</span>
+        </span>
+      </div>
+
+      {% if result.description %}
+      <div class="description">
+        <strong data-i18n="description" class="strong"
+          >📝 {{ description }}</strong
+        >
+        <p class="description-text">{{ result.description }}</p>
+      </div>
+      {% endif %}
+
+      <details class="transcript">
+        <summary data-i18n="transcript_label" class="strong">
+          {{ transcript_label }}
+        </summary>
+        <p class="transcript-text">{{ result.transcript }}</p>
+      </details>
+
+      <div class="result-links">
+        <span>🔗</span>
+        <a
+          href="{{ result.url }}"
+          target="_blank"
+          class="video-link"
+          data-i18n="watch_video"
+          >{{ watch_video }}</a
+        >
+      </div>
+
+      {% if result.available_languages and result.available_languages|length > 1
+      %}
+      <div class="other-languages">
+        <span>🌍</span>
+        <span data-i18n="available_in_other_languages"
+          >{{ available_in_other_languages }}</span
+        >
+      </div>
+      {% for lang_code in result.available_languages %}
+          {% if lang_code != result.language %}
+          <details class="language-details" data-lang="{{ lang_code }}" data-talk-id="{{ result.talk_id }}">
+            <summary class="language-summary">
+              🌐 {{ lang_code|upper }}
+            </summary>
+            <div class="language-content">
+              <div class="loading-message">Загрузка...</div>
+            </div>
+          </details>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="no-results">
+    <p>🔍 <span data-i18n="no_results">{{ no_results }}</span> "{{ query }}"</p>
+    <p data-i18n="try_changing_query">{{ try_changing_query }}</p>
+  </div>
+  {% endif %}
+</section>
+<script src="{{ url_for('static', filename='js/translate.js') }}"></script>
+{% endblock %}

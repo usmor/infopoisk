@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="description">
+    <h2 data-i18n="about_title">{{ about_title }}</h2>
+    <p data-i18n="about_text">{{ about_text }}</p>
+</section>
+
+<section class="features-list">
+    <div class="feature light-blue">
+        <h3 data-i18n="language_support_title">{{ language_support_title }}</h3>
+        <p data-i18n="language_support_text">{{ language_support_text }}</p>
+    </div>
+
+    <div class="feature light-green">
+        <h3 data-i18n="models_title">{{ models_title }}</h3>
+        <ul class="list">
+            <li class="item">
+                <span class="bold-text">BM25</span> —
+                <span data-i18n="models_bm25">{{ models_bm25 }}</span>
+            </li>
+            <li class="item">
+                <span class="bold-text">Word2Vec</span> —
+                <span data-i18n="models_word2vec">{{ models_word2vec }}</span>
+            </li>
+            <li class="item">
+                <span class="bold-text">FastText</span> —
+                <span data-i18n="models_fasttext">{{ models_fasttext }}</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="feature light-violet">
+        <h3 data-i18n="parallel_title">{{ parallel_title }}</h3>
+        <p data-i18n="parallel_text">{{ parallel_text }}</p>
+    </div>
+
+    <div class="feature light-peach">
+        <h3 data-i18n="detection_title">{{ detection_title }}</h3>
+        <p data-i18n="detection_text">{{ detection_text }}</p>
+    </div>
+
+    <div class="feature light-yellow">
+        <h3 data-i18n="info_title">{{ info_title }}</h3>
+        <ul class="list">
+            {% for item in info_items %}
+            <li class="item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="feature search">
+        <h2 data-i18n="search_title">{{ search_title }}</h2>
+        <p data-i18n="search_text">{{ search_text }}</p>
+        <a href="/search" class="link" data-i18n="search_button">{{ search_button }}</a>
+    </div>
+</section>
+{% endblock %}

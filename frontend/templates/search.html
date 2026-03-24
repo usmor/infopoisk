@@ -1,0 +1,63 @@
+{% extends "base.html" %} {%
+block content %}
+<section class="description">
+  <h2 data-i18n="search_page_title">{{ search_page_title }}</h2>
+  <p data-i18n="search_page_description">{{ search_page_description }}</p>
+</section>
+<form action="/results" method="get" class="form-search">
+  <div class="query-input">
+    <label class="input-label" for="query" data-i18n="search_query_label">{{ search_query_label }}</label>
+    <input type="text" name="query" id="query" required />
+  </div>
+
+  <div class="index-input">
+    <p class="input-label" data-i18n="search_index_label">{{ search_index_label }}</p>
+    <div class="index-switcher">
+      <input class="radio-index switcher-radio" type="radio" id="bm25" name="index-switch" value="bm25" {% if
+        index=='bm25' %}checked{% endif %} />
+      <label class="switcher-label" for="bm25">BM25</label>
+
+      <input class="radio-index switcher-radio" type="radio" id="word2vec" name="index-switch" value="word2vec" {% if
+        index=='word2vec' %}checked{% endif %} />
+      <label class="switcher-label" for="word2vec">Word2Vec</label>
+
+      <input class="radio-index switcher-radio" type="radio" id="fasttext" name="index-switch" value="fasttext" {% if
+        index=='fasttext' %}checked{% endif %} />
+      <label class="switcher-label" for="fasttext">fastText</label>
+    </div>
+  </div>
+  <div class="k-top-input">
+    <label for="k_top" class="input-label" data-i18n="search_k_top_label">{{ search_k_top_label }}</label>
+    <div class="range-container">
+      <input type="range" name="k_top" id="k_top" value="10" min="1" max="50" step="1" />
+      <span id="k_top_value" class="range-value">10</span>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const rangeInput = document.getElementById('k_top');
+        const valueDisplay = document.getElementById('k_top_value');
+        const labelValue = document.getElementById('k_top_label_value');
+
+        if (rangeInput && valueDisplay) {
+          function updateValue() {
+            const value = rangeInput.value;
+            valueDisplay.textContent = value;
+            if (labelValue) {
+              labelValue.textContent = value;
+            }
+          }
+
+          updateValue();
+          rangeInput.addEventListener('input', updateValue);
+        }
+      });
+    </script>
+
+  </div>
+  <button class="submit-button" type="submit">
+    <p data-i18n="search_button">{{ search_button }}</p>
+  </button>
+</form>
+
+</section>
+{% endblock %}

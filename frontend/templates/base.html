@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TED Talks Search</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body class="page">
+  <header class="header">
+    <a href="/" class="logo">TED Search</a>
+    <navbar class="navbar">
+      <a href="/" class="navbar-link" data-i18n="home">{{ home }}</a>
+      <a href="/search" class="navbar-link" data-i18n="search">{{ search }}</a>
+      <div class="language-switcher">
+        <input class="radio-lang switcher-radio" type="radio" id="lang-ru" name="language-switch" value="ru" {% if
+          lang=='ru' %}checked{% endif %} />
+        <label class="switcher-label" for="lang-ru">🇷🇺 RU</label>
+
+        <input class="radio-lang switcher-radio" type="radio" id="lang-en" name="language-switch" value="en" {% if
+          lang=='en' %}checked{% endif %} />
+        <label class="switcher-label" for="lang-en">🇬🇧 EN</label>
+
+        <input class="radio-lang switcher-radio" type="radio" id="lang-fr" name="language-switch" value="fr" {% if
+          lang=='fr' %}checked{% endif %} />
+        <label class="switcher-label" for="lang-fr">🇫🇷 FR</label>
+      </div>
+    </navbar>
+  </header>
+
+  <main class="content">
+    <h1 data-i18n="project_title"> {{ project_title }}</h1>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 </span>
+    <span data-i18n="author">{{ author }}</span>
+  </footer>
+  <script src="{{ url_for('static', filename='js/language-switcher.js') }}"></script>
+</body>
+
+</html>
